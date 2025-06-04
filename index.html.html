@@ -11,7 +11,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000000;
+      background-color: #000;
       color: #d32f2f;
       font-family: 'Montserrat', sans-serif;
       box-sizing: border-box;
@@ -28,11 +28,10 @@
       flex-direction: column;
     }
 
-    /* Tela de introdução */
     #intro {
       position: fixed;
       inset: 0;
-      background-color: #000000;
+      background-color: #000;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -41,7 +40,7 @@
 
     #intro button {
       background-color: #d32f2f;
-      color: #FFFFFF;
+      color: #fff;
       font-size: clamp(1.2rem, 4vw, 2rem);
       padding: 1em 2em;
       border: none;
@@ -49,14 +48,17 @@
       font-weight: bold;
       font-family: 'Montserrat', sans-serif;
       cursor: pointer;
-      transition: transform 0.3s;
       animation: pulse 1.5s infinite;
+      transition: transform 0.3s;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
     }
 
     .header {
@@ -125,11 +127,11 @@
       justify-content: center;
       gap: 15px;
       padding: 15px 10px 25px;
-      background: rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.05);
     }
 
     .time-box {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       padding: 15px 10px;
       border-radius: 10px;
       min-width: 90px;
@@ -160,31 +162,17 @@
       }
     }
 
-    /* Efeitos de corações */
-    #hearts-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 9998;
-    }
-
     .heart {
-      position: absolute;
-      color: #fff;
-      font-size: 20px;
-      animation: fall 5s linear forwards;
+      position: fixed;
+      top: -20px;
+      color: #d32f2f;
+      animation: fall 4s linear forwards;
+      pointer-events: none;
+      z-index: 999;
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-10%);
-        opacity: 1;
-      }
-      100% {
+      to {
         transform: translateY(110vh);
         opacity: 0;
       }
@@ -193,18 +181,13 @@
 </head>
 <body>
 
-  <!-- EFEITO CORAÇÕES -->
-  <div id="hearts-container"></div>
-
   <!-- TELA DE INTRODUÇÃO -->
   <div id="intro">
     <button onclick="startSite()">APERTE E SURPREENDA-SE</button>
   </div>
 
   <!-- CONTEÚDO PRINCIPAL -->
-  <div class="header">
-    FELIZ DIA DOS NAMORADOS!
-  </div>
+  <div class="header">FELIZ DIA DOS NAMORADOS!</div>
 
   <div class="carousel-wrapper">
     <div class="carousel-container">
@@ -223,12 +206,12 @@
     </div>
 
     <div class="footer-text">
-      <strong>Desde 18/08/2019</strong><br>
-      <strong>Obrigada por todos os 6 lindos anos comemorando essa linda data juntos. <br>
+      Desde 18/08/2019<br>
+      Obrigada por todos os 6 lindos anos comemorando essa linda data juntos. <br>
       Agradeço a Deus por ter te colocado na minha vida. <br>
       Eu oro para que consigamos realizar nossos sonhos e projetos juntos <br>
-      e que nossa família seja formada de forma sólida e cheia de amor. </strong><br>
-      <strong>Eu te amo infinitamente, meu amorzinho. ❤️</strong>
+      e que nossa família seja formada de forma sólida e cheia de amor. <br>
+      <strong>Eu te amo infinitamente, meu amorzinho. 💖</strong>
     </div>
   </div>
 
@@ -244,42 +227,19 @@
   <script>
     function startSite() {
       document.getElementById('intro').style.display = 'none';
-      startHearts();
+      launchHearts();
     }
 
-    // Efeito corações caindo
-    function startHearts() {
-      const container = document.getElementById('hearts-container');
-
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.textContent = '❤️';
-
-        const size = Math.random() * 20 + 10; // 10px a 30px
-        heart.style.fontSize = `${size}px`;
-
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
-
-        container.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 6000);
-      }, 300);
-    }
-
-    // Carrossel de imagens (troca a cada 3 segundos)
+    // Carrossel
     const imagens = document.querySelectorAll('.carousel img');
     let index = 0;
     setInterval(() => {
       imagens[index].classList.remove('active');
       index = (index + 1) % imagens.length;
       imagens[index].classList.add('active');
-    }, 3000);
+    }, 3000); // 3 segundos
 
-    // Cronômetro de tempo juntos
+    // Cronômetro
     function updateTimer() {
       const startDate = new Date(2019, 7, 18);
       const now = new Date();
@@ -311,6 +271,21 @@
 
     setInterval(updateTimer, 1000);
     updateTimer();
+
+    // Chuva de corações
+    function launchHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heart.innerText = "❤️";
+        document.body.appendChild(heart);
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 150);
+    }
   </script>
 
 </body>
