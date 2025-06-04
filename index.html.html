@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nosso Carrossel</title>
+
+  <!-- Fonte Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000000;
+      color: #d32f2f;
+      font-family: 'Montserrat', sans-serif;
+      box-sizing: border-box;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Tela de introdução */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background-color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #intro button {
+      background-color: #d32f2f;
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      padding: 1em 2em;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      transition: transform 0.3s;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px 10px 10px;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: 700;
+    }
+
+    .carousel-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+    }
+
+    .carousel-container {
+      perspective: 1200px;
+      width: 90vw;
+      max-width: 300px;
+      aspect-ratio: 2 / 3;
+      margin-bottom: 20px;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      backface-visibility: hidden;
+      opacity: 0;
+      transform: rotateY(180deg);
+      transition: transform 1s ease-in-out, opacity 0.8s ease-in-out;
+    }
+
+    .carousel img.active {
+      opacity: 1;
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+
+    .footer-text {
+      text-align: center;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      margin-top: 10px;
+      line-height: 1.6em;
+    }
+
+    .footer-text strong {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .timer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px 10px 25px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px 10px;
+      border-radius: 10px;
+      min-width: 90px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      font-size: 1.2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .time-value {
+      font-weight: 700;
+      font-size: 1.6em;
+      line-height: 1.2em;
+    }
+
+    .time-label {
+      font-size: 0.85em;
+      margin-top: 5px;
+      text-transform: lowercase;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 480px) {
+      .time-box {
+        min-width: 40%;
+      }
+    }
+
+    /* Efeitos de corações */
+    #hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9998;
+    }
+
+    .heart {
+      position: absolute;
+      color: #fff;
+      font-size: 20px;
+      animation: fall 5s linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EFEITO CORAÇÕES -->
+  <div id="hearts-container"></div>
+
+  <!-- TELA DE INTRODUÇÃO -->
+  <div id="intro">
+    <button onclick="startSite()">APERTE E SURPREENDA-SE</button>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="header">
+    FELIZ DIA DOS NAMORADOS!
+  </div>
+
+  <div class="carousel-wrapper">
+    <div class="carousel-container">
+      <div class="carousel">
+        <img src="imagem1.jpeg" class="active" alt="Foto 1" />
+        <img src="imagem2.jpeg" alt="Foto 2" />
+        <img src="imagem3.jpeg" alt="Foto 3" />
+        <img src="imagem4.jpeg" alt="Foto 4" />
+        <img src="imagem5.jpeg" alt="Foto 5" />
+        <img src="imagem6.jpeg" alt="Foto 6" />
+        <img src="imagem7.jpeg" alt="Foto 7" />
+        <img src="imagem8.jpeg" alt="Foto 8" />
+        <img src="imagem9.jpeg" alt="Foto 9" />
+        <img src="imagem10.jpeg" alt="Foto 10" />
+      </div>
+    </div>
+
+    <div class="footer-text">
+      <strong>Desde 18/08/2019</strong><br>
+      <strong>Obrigada por todos os 6 lindos anos comemorando essa linda data juntos. <br>
+      Agradeço a Deus por ter te colocado na minha vida. <br>
+      Eu oro para que consigamos realizar nossos sonhos e projetos juntos <br>
+      e que nossa família seja formada de forma sólida e cheia de amor. </strong><br>
+      <strong>Eu te amo infinitamente, meu amorzinho. ❤️</strong>
+    </div>
+  </div>
+
+  <div class="timer" id="timer">
+    <div class="time-box"><div class="time-value" id="years">0</div><div class="time-label">anos</div></div>
+    <div class="time-box"><div class="time-value" id="months">0</div><div class="time-label">meses</div></div>
+    <div class="time-box"><div class="time-value" id="days">0</div><div class="time-label">dias</div></div>
+    <div class="time-box"><div class="time-value" id="hours">0</div><div class="time-label">horas</div></div>
+    <div class="time-box"><div class="time-value" id="minutes">0</div><div class="time-label">minutos</div></div>
+    <div class="time-box"><div class="time-value" id="seconds">0</div><div class="time-label">segundos</div></div>
+  </div>
+
+  <script>
+    function startSite() {
+      document.getElementById('intro').style.display = 'none';
+      startHearts();
+    }
+
+    // Efeito corações caindo
+    function startHearts() {
+      const container = document.getElementById('hearts-container');
+
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = '❤️';
+
+        const size = Math.random() * 20 + 10; // 10px a 30px
+        heart.style.fontSize = `${size}px`;
+
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+
+        container.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+      }, 300);
+    }
+
+    // Carrossel de imagens (troca a cada 3 segundos)
+    const imagens = document.querySelectorAll('.carousel img');
+    let index = 0;
+    setInterval(() => {
+      imagens[index].classList.remove('active');
+      index = (index + 1) % imagens.length;
+      imagens[index].classList.add('active');
+    }, 3000);
+
+    // Cronômetro de tempo juntos
+    function updateTimer() {
+      const startDate = new Date(2019, 7, 18);
+      const now = new Date();
+
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+      let hours = now.getHours() - startDate.getHours();
+      let minutes = now.getMinutes() - startDate.getMinutes();
+      let seconds = now.getSeconds() - startDate.getSeconds();
+
+      if (seconds < 0) { seconds += 60; minutes--; }
+      if (minutes < 0) { minutes += 60; hours--; }
+      if (hours < 0) { hours += 24; days--; }
+      if (days < 0) {
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+        months--;
+      }
+      if (months < 0) { months += 12; years--; }
+
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+
+</body>
+</html>
